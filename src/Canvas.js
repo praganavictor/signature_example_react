@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import SignaturePad from "signature_pad";
 
-// import { Container } from './styles';
+import { Container } from "./canvasstyled";
 
 let canvas;
 let signature;
 let saveSignature;
 export default class src extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     canvas = this.refs.canvas;
     signature = new SignaturePad(canvas, {
@@ -30,7 +33,7 @@ export default class src extends Component {
 
   render() {
     return (
-      <div id="signature-pad">
+      <Container showCanvas={this.props.showCanvas}>
         <div className="signature-pad--body">
           <canvas ref="canvas" />
         </div>
@@ -65,7 +68,7 @@ export default class src extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }

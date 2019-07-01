@@ -15,7 +15,7 @@ export default class src extends Component {
     return (
       <div>
         <button onClick={this.showCanvas}>Show Canvas?</button>
-        {this.state.showCanvas ? <Canvas /> : ""}
+        <Canvas showCanvas={this.state.showCanvas} />
       </div>
     );
   }
