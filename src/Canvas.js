@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SignaturePad from "signature_pad";
 
-import { Container } from "./canvasstyled";
+import { Container, Signature } from "./canvasstyled";
 
 let canvas;
 let signature;
@@ -9,6 +9,9 @@ let saveSignature;
 export default class src extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      canvas: props.showCanvas
+    };
   }
   componentDidMount() {
     canvas = this.refs.canvas;
@@ -17,6 +20,10 @@ export default class src extends Component {
       // this option can be omitted if only saving as PNG or SVG
       backgroundColor: "rgb(255, 255, 255)"
     });
+  }
+
+  componentDidUpdate() {
+    this.toggleCanvas();
   }
 
   clearCanvas = () => {
@@ -31,41 +38,30 @@ export default class src extends Component {
     signature.fromDataURL(saveSignature);
   };
 
+  toggleCanvas = () => {
+    if (this.props.showCanvas !== this.state.canvas)
+      this.setState({ canvas: !this.state.canvas });
+  };
+
   render() {
+    console.log("this.state.canvas", this.state.canvas);
     return (
-      <Container showCanvas={this.props.showCanvas}>
-        <div className="signature-pad--body">
-          <canvas ref="canvas" />
-        </div>
-        <div className="signature-pad--footer">
-          <div className="description">Sign above</div>
+      <Container propcanvas={this.state.canvas}>
+        <Signature ref="canvas" width="500" height="300" />
+        <div>
+          <p>Assine acima</p>
+          <div>
+            <button type="button" onClick={this.clearCanvas}>
+              Clear
+            </button>
 
-          <div className="signature-pad--actions">
-            <div>
-              <button
-                type="button"
-                className="button clear"
-                onClick={this.clearCanvas}
-              >
-                Clear
-              </button>
+            <button type="button" onClick={this.saveCanvas}>
+              Save
+            </button>
 
-              <button
-                type="button"
-                className="button save"
-                onClick={this.saveCanvas}
-              >
-                Save
-              </button>
-
-              <button
-                type="button"
-                className="button show"
-                onClick={this.showCanvas}
-              >
-                Show
-              </button>
-            </div>
+            <button type="button" onClick={this.showCanvas}>
+              Show
+            </button>
           </div>
         </div>
       </Container>

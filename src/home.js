@@ -12,6 +12,8 @@ export default class src extends Component {
   };
 
   render() {
+    console.log("home", this.state.showCanvas);
+
     return (
       <div>
         <button onClick={this.showCanvas}>Show Canvas?</button>
